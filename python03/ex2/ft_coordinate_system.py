@@ -7,19 +7,23 @@ def get_player_pos():
         raw = input("Enter new coordinates as floats in format 'x,y,z': ")
         try:
             parts = raw.split(',')
-            x, y, z = parts           
-            return x, y, z
-
+            x_str, y_str, z_str = parts
         except ValueError:
             print("Invalid syntax")
+            continue
 
-        for p in parts:
+        coords = []
+        failed = False
+        for p in (x_str, y_str, z_str):
             try:
-                x, y, z, = float(x), float(y), float(z)
-                return(x, y, z)
-            except:
-                print(f"Error on parameter '{p}': {e}")
-
+                coords.append(float(p))
+            except ValueError as e:
+                print(f"Error on parameter '{p.strip()}': {e}")
+                failed = True
+                break
+        if failed:
+            continue
+        return tuple(coords)
 
 print("=== Game Coordinate System ===")
 print("Get a first set of coordinates")
