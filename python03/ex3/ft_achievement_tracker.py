@@ -9,10 +9,9 @@ ACHIEVEMENTS = [
 ]
 
 
-def gen_player_achievements():
+def gen_player_achievements() -> set[str]:
     count = random.randint(3, 9)
     return set(random.sample(ACHIEVEMENTS, count))
-
 
 
 print("=== Achievement Tracker System ===")
