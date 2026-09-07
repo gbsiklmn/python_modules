@@ -38,6 +38,11 @@ for name, qty in inventory.items():
     if most_qty is None or qty > most_qty:
         most_name, most_qty = name, qty
 
+print(f"Item most abundant: {most_name} with quantity {most_qty}")
+least_name, least_qty = None, None
+for name, qty in inventory.items():
+    if least_qty is None or qty < least_qty:
+        least_name, least_qty = name, qty
+print(f"Item least abundant: {least_name} with quantity {least_qty}")
 inventory.update({"magic_item": 1})
 print(f"Updated inventory: {inventory}")
-print(f"Item most abundant: {most_name} with quantity {most_qty}")
