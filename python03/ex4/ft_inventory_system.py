@@ -2,6 +2,7 @@
 import sys
 
 inventory = {}
+print("=== Inventory System Analysis ===")
 for arg in sys.argv[1:]:
 
     parts = arg.split(':')
