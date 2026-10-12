@@ -13,6 +13,7 @@ def gen_event() -> Generator[tuple[str, str], None, None]:
         action = random.choice(ACTIONS)
         yield name, action
 
+
 print("=== Game Data Stream Processor ===")
 g = gen_event()
 
@@ -24,7 +25,8 @@ events = [next(g) for _ in range(10)]
 print("Built list of 10 events:", events)
 
 
-def consume_event(events: list[tuple[str, str]]) -> Generator[tuple[str, str], None, None]:
+def consume_event(events: list[tuple[str, str]]
+                  ) -> Generator[tuple[str, str], None, None]:
     while events:
         index = random.randint(0, len(events) - 1)
         event = events.pop(index)

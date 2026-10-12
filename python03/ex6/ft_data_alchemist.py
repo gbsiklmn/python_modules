@@ -9,8 +9,8 @@ already_capitalized = [n for n in names if n == n.capitalize()]
 score_dict = {n: random.randint(50, 1000) for n in capitalized}
 average = round(sum(score_dict.values()) / len(score_dict.values()), 2)
 high_scores = {name: score for name,
-               score in score_dict.items() if 
-               score> average}
+               score in score_dict.items() if
+               score > average}
 
 print("=== Game Data Alchemist ===")
 
