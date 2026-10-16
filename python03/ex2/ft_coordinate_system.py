@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import math
 
+
 def get_player_pos() -> tuple[float, float, float]:
     while True:
         raw = input("Enter new coordinates as floats in format 'x,y,z': ")
