@@ -31,18 +31,24 @@ def main() -> None:
         new_content = "\n".join(new_lines) + "\n"
         print(new_content, end="")
         print("---")
-        answer = input("Enter new file name (or empty): ")
+        sys.stdout.write("Enter new file name (or empty): ")
+        sys.stdout.flush()
+        answer = sys.stdin.readline().rstrip("\n")
         if answer == "":
             print("Not saving data.")
         else:
             print(f"Saving data to '{answer}'")
-            f = open(answer, "w")
-            f.write(new_content)
-            f.close()
-            print(f"Data saved in file '{answer}'.")
-
+            try:
+                f = open(answer, "w")
+                f.write(new_content)
+                f.close()
+                print(f"Data saved in file '{answer}'.")
+                
+            except OSError as e:
+                print(f"[STDERR] Error opening file '{e.filename}': {e}", file=sys.stderr)
+                print("Data not saved.")
     except OSError as e:
-        print(f"Error opening file '{e.filename}': {e}")
+        print(f"[STDERR] Error opening file '{e.filename}': {e}", file=sys.stderr)
 
 
 if __name__ == "__main__":
