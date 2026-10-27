@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import sys
-from typing import IO
 
 
 def main() -> None:
@@ -13,7 +12,7 @@ def main() -> None:
     print(f"Accessing file '{filename}'")
 
     try:
-        file: IO[str] = open(filename, "r")
+        file = open(filename, "r")
 
         print("---")
         content = file.read()
