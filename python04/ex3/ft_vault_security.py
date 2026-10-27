@@ -6,8 +6,6 @@ def secure_archive(filename: str, action: str = "read",
         if action == "read":
             with open(filename, "r") as f:
                 data = f.read()
-                print("inside of the block", f.closed)
-            print("outside of the block", f.closed)
             return (True, data)
         elif action == "write":
             if content is None:
@@ -33,8 +31,8 @@ def main() -> None:
     print(secure_archive("new_fragment.txt", "write", "hello\n"))
     print(secure_archive("anything", "delete"))
     print(secure_archive("new_fragment.txt", "write"))
-    #ok, text = secure_archive("ancient_fragment.txt")
-    #print(secure_archive("new_fragment.txt", "write", text))
+    ok, text = secure_archive("ancient_fragment.txt")
+    print(secure_archive("new_fragment.txt", "write", text))
     print(secure_archive("/etc/passwd", "write", "hello\n"))
 
 
