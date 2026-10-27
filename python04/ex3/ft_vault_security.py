@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-def secure_archive(filename: str, action: str = "read", content: str | None = None) -> tuple[bool, str]:
+def secure_archive(filename: str, action: str = "read",
+                   content: str | None = None) -> tuple[bool, str]:
     try:
         if action == "read":
             with open(filename, "r") as f:
@@ -20,7 +21,8 @@ def secure_archive(filename: str, action: str = "read", content: str | None = No
     except UnicodeDecodeError as e:
         return (False, str(e))
 
-def main():
+
+def main() -> None:
     print("=== Cyber Archives Security ===")
     print(secure_archive("/not/existing/file"))
     print(secure_archive("/etc/shadow"))
@@ -32,8 +34,7 @@ def main():
     ok, text = secure_archive("ancient_fragment.txt")
     print(secure_archive("new_fragment.txt", "write", text))
     print(secure_archive("/etc/passwd", "write", "hello\n"))
-    
+
 
 if __name__ == "__main__":
     main()
-
