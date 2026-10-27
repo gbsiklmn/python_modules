@@ -43,12 +43,14 @@ def main() -> None:
                 f.write(new_content)
                 f.close()
                 print(f"Data saved in file '{answer}'.")
-                
+
             except OSError as e:
-                print(f"[STDERR] Error opening file '{e.filename}': {e}", file=sys.stderr)
+                print(
+                    f"[STDERR] Error opening file '{e.filename}': {e}", file=sys.stderr)
                 print("Data not saved.")
     except OSError as e:
-        print(f"[STDERR] Error opening file '{e.filename}': {e}", file=sys.stderr)
+        print(
+            f"[STDERR] Error opening file '{e.filename}': {e}", file=sys.stderr)
 
 
 if __name__ == "__main__":
