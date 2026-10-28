@@ -27,7 +27,7 @@ def main() -> None:
     print(secure_archive("/not/existing/file"))
     print(secure_archive("/etc/shadow"))
     print(secure_archive("/bin/ls"))
-    print(secure_archive("fragment.txt"))
+    print(secure_archive("ancient_fragment.txt"))
     print(secure_archive("new_fragment.txt", "write", "hello\n"))
     print(secure_archive("anything", "delete"))
     print(secure_archive("new_fragment.txt", "write"))
