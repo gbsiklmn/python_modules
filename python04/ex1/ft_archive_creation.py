@@ -42,6 +42,8 @@ def main() -> None:
 
     except OSError as e:
         print(f"Error opening file '{e.filename}': {e}")
+    except (KeyboardInterrupt, EOFError) as e:
+        print("Error")
 
 
 if __name__ == "__main__":

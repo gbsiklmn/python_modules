@@ -48,10 +48,13 @@ def main() -> None:
                     f"[STDERR] Error opening file '{e.filename}': {e}",
                     file=sys.stderr)
                 print("Data not saved.")
+
     except OSError as e:
         print(
             f"[STDERR] Error opening file '{e.filename}': {e}",
             file=sys.stderr)
+    except KeyboardInterrupt as e:
+        print("Error")
 
 
 if __name__ == "__main__":
