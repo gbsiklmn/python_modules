@@ -53,7 +53,7 @@ def main() -> None:
         print(
             f"[STDERR] Error opening file '{e.filename}': {e}",
             file=sys.stderr)
-    except KeyboardInterrupt as e:
+    except KeyboardInterrupt:
         print("Error")
 
 

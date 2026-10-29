@@ -42,7 +42,7 @@ def main() -> None:
 
     except OSError as e:
         print(f"Error opening file '{e.filename}': {e}")
-    except (KeyboardInterrupt, EOFError) as e:
+    except (KeyboardInterrupt, EOFError):
         print("Error")
 
 
