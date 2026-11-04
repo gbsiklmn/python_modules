@@ -2,8 +2,10 @@ import os
 import site
 import sys
 
+
 def in_virtual_env() -> bool:
     return sys.prefix != sys.base_prefix
+
 
 def main() -> None:
     if in_virtual_env():
@@ -27,8 +29,6 @@ def main() -> None:
         print("source lab_env/bin/activate # On Unix")
         print("lab_env\\Scripts\\activate # On Windows")
         print("Then run this program again.")
-
-
 
 
 if __name__ == "__main__":
