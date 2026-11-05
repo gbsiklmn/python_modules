@@ -21,7 +21,8 @@ def main() -> None:
     print("Configuration loaded:")
     print(f"Mode: {mode}")
     if config["DATABASE_URL"]:
-        where = "local instance" if mode == "development" else "production cluster"
+        where = ("local instance" if mode == "development"
+                 else "production cluster")
         print(f"Database: Connected to {where}")
     else:
         print("Database: MISSING (DATABASE_URL not set)")
