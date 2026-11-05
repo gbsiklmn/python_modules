@@ -17,7 +17,7 @@ def main() -> None:
             print(f"[MISSING] {name}")
             missing.append(name)
 
-    print("pip vs Poetry")
+    print("pip vs Poetry:")
     print("requirements.txt declares what to install; pip resolves it at install time.")
     print("pyproject.toml declares the same constraints, and Poetry pins the resolved")
     print("versions in poetry.lock so every install is identical.")
