@@ -5,6 +5,7 @@ REAGENTS: list[tuple[str, str]] = [
     ("numpy", "Numerical computation ready"),
 ]
 
+
 def main() -> None:
     print("REAGENT STATUS: Loading reagents...")
     print("Checking dependencies:")
@@ -29,6 +30,7 @@ def main() -> None:
 
     else:
         print("All reagents present and accounted for.")
+
 
 if __name__ == "__main__":
     main()

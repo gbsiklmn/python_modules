@@ -5,9 +5,11 @@ VARIABLES: list[str] = [
     "MATRIX_MODE", "DATABASE_URL", "API_KEY", "LOG_LEVEL", "ZION_ENDPOINT",
 ]
 
+
 def main() -> None:
     load_dotenv()
-    config: dict[str, str | None] = {name: os.environ.get(name) for name in VARIABLES}
+    config: dict[str, str | None] = {
+        name: os.environ.get(name) for name in VARIABLES}
     missing = [name for name, value in config.items() if not value]
 
     print("ORACLE STATUS: Consulting the configuration...")
@@ -28,7 +30,8 @@ def main() -> None:
     else:
         print("API Access: MISSING (API_KEY not set)")
 
-    log_level = config["LOG_LEVEL"] or ("DEBUG" if mode == "development" else "WARNING")
+    log_level = config["LOG_LEVEL"] or (
+        "DEBUG" if mode == "development" else "WARNING")
     print(f"Log level: {log_level}")
 
     if config["ZION_ENDPOINT"]:
