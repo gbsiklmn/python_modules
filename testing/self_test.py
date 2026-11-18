@@ -1,11 +1,9 @@
-class Dog:
-    def __init__(self, name: str) -> None:
-        self.name = name
+def all_positive(values: list[int]) -> bool:
+    for v in values:
+        if v <= 0:
+            return False
+    return True
 
-    def speak(self) -> None:
-        print(f"{self.name} says woof")
-
-a = Dog("Rex")
-b = Dog("Luna")
-a.speak()
-b.speak()
+print(all_positive([3, 1, 2]))
+print(all_positive([3, -1, 2]))
+print(all_positive([]))
