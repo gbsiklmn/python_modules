@@ -1,9 +1,5 @@
-def all_positive(values: list[int]) -> bool:
-    for v in values:
-        if v <= 0:
-            return False
-    return True
+import math
+a, b, c = map(float, input().split())
 
-print(all_positive([3, 1, 2]))
-print(all_positive([3, -1, 2]))
-print(all_positive([]))
+length = round(math.sqrt (a ** 2 + b ** 2 + c**2), 2)
+print(length)

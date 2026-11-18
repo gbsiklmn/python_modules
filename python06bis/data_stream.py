@@ -118,10 +118,20 @@ class DataStream:
         self._processors.append(proc)
 
     def process_stream(self, stream: list[Any]) -> None:
-        # TODO(human): route each element of `stream` to a registered
-        # processor that can handle it. If none can, print:
-        #   DataStream error - Can't process element in stream: <element>
-        pass
+        for element in stream:
+            handled = False
+            for proc in self._processors:
+                if proc.validate(element):
+                    try:
+                        proc.ingest(element)
+                        handled = True
+                    except (ValueError, KeyError, TypeError) as e:
+                        print(f"DataStream error - {proc.name}: {e}")
+                        handled = True
+                    break
+            if not handled:
+                print("DataStream error -"
+                      f"Can't process element in stream: {element}")
 
     def print_processors_stats(self) -> None:
         print("== DataStream statistics ==")
