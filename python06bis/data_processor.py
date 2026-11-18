@@ -16,6 +16,8 @@ class DataProcessor(ABC):
         ...
 
     def output(self) -> tuple[int, str]:
+        if not self.data:
+            raise IndexError("No data left on processor")
         text = self.data.pop(0)
         rank = self._rank
         self._rank += 1
@@ -68,7 +70,7 @@ class LogProcessor(DataProcessor):
                     return False
             return True
         return self._is_log(data)
-    
+
     def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> None:
         if not self.validate(data):
             raise ValueError("Improper log data")
@@ -77,7 +79,6 @@ class LogProcessor(DataProcessor):
                 self.data.append(f"{item['log_level']}: {item['log_message']}")
         else:
             self.data.append(f"{data['log_level']}: {data['log_message']}")
-
 
     def _is_log(self, item: Any) -> bool:
         if not isinstance(item, dict):
@@ -98,41 +99,41 @@ def main() -> None:
     try:
         num.ingest("foo")
     except ValueError as e:
-        print(f"Got exception: {e}")
+        print(f" Got exception: {e}")
 
-    numbers = [1, 2, 3, 4, 5]
+    numbers: list[int | float] = [1, 2, 3, 4, 5]
     print(f" Processing data: {numbers}")
     num.ingest(numbers)
-    print("Extracting 3 values...")
+    print(" Extracting 3 values...")
     for _ in range(3):
         rank, value = num.output()
         print(f" Numeric value {rank}: {value}")
 
     print("\nTesting Text Processor...")
- 
+
     tp = TextProcessor()
     print(f" Trying to validate input '42': {tp.validate(42)}")
     texts = ['Hello', 'Nexus', 'World']
     print(f" Processing data: {texts}")
     tp.ingest(texts)
-    print("Extracting 1 value...")
+    print(" Extracting 1 value...")
     rank, value = tp.output()
     print(f" Text value {rank}: {value}")
 
-    print("\nTesing Log Processor...")
+    print("\nTesting Log Processor...")
     lp = LogProcessor()
     print(f" Trying to validate input 'Hello': {lp.validate('Hello')}")
 
     logs = [
-    {'log_level': 'NOTICE', 'log_message': 'Connection to server'},
-    {'log_level': 'ERROR', 'log_message': 'Unauthorized access!!'},
+        {'log_level': 'NOTICE', 'log_message': 'Connection to server'},
+        {'log_level': 'ERROR', 'log_message': 'Unauthorized access!!'},
     ]
     print(f" Processing data: {logs}")
     lp.ingest(logs)
-    print("Extracting 2 values...")
+    print(" Extracting 2 values...")
     for _ in range(2):
         rank, value = lp.output()
-        print(f"Loga entry {rank}: {value}")
+        print(f" Log entry {rank}: {value}")
 
 
 if __name__ == "__main__":
