@@ -142,6 +142,12 @@ class DataStream:
             print(f"{proc.name}: total {proc.total()} items processed, "
                   f"remaining {proc.remaining()} on processor")
 
+class ExportPlugin:
+    ...
+
+class CSVExportPlugin:
+    ...
+
 
 def main() -> None:
     print("=== Code Nexus - Data Stream ===")
