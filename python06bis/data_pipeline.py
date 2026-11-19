@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import Any, Protocol
 
 
 class DataProcessor(ABC):
@@ -110,6 +110,11 @@ class LogProcessor(DataProcessor):
         return True
 
 
+class ExportPlugin(Protocol):
+    def process_output(self, data: list[tuple[int, str]]) -> None:
+        ...
+
+
 class DataStream:
     def __init__(self) -> None:
         self._processors: list[DataProcessor] = []
@@ -130,7 +135,7 @@ class DataStream:
                         handled = True
                     break
             if not handled:
-                print("DataStream error -"
+                print("DataStream error - "
                       f"Can't process element in stream: {element}")
 
     def print_processors_stats(self) -> None:
@@ -142,25 +147,47 @@ class DataStream:
             print(f"{proc.name}: total {proc.total()} items processed, "
                   f"remaining {proc.remaining()} on processor")
 
-class ExportPlugin:
-    ...
+    def output_pipeline(self, nb: int, plugin: ExportPlugin) -> None:
+        for proc in self._processors:
+            batch: list[tuple[int, str]] = []
+            for _ in range(nb):
+                if proc.remaining() == 0:
+                    break
+                batch.append(proc.output())
+            plugin.process_output(batch)
+
 
 class CSVExportPlugin:
-    ...
+    def process_output(self, data: list[tuple[int, str]]) -> None:
+        print("CSV Output:")
+        values: list[str] = []
+        for rank, value in data:
+            values.append(value)
+        print(",".join(values))
+
+
+class JSONExportPlugin:
+    def process_output(self, data: list[tuple[int, str]]) -> None:
+        print("JSON Output:")
+        pairs: list[str] = []
+        for rank, value in data:
+            pairs.append(f'"item_{rank}": "{value}"')
+        print("{"+", ".join(pairs) + "}")
 
 
 def main() -> None:
-    print("=== Code Nexus - Data Stream ===")
+    print("=== Code Nexus - Data Pipeline ===")
 
-    print("\nInitialize Data Stream...")
+    print("\nInitialize Data Stream...\n")
     stream = DataStream()
     stream.print_processors_stats()
 
-    print("\nRegistering Numeric Processor")
-    num = NumericProcessor()
-    stream.register_processor(num)
+    print("\nRegistering Processors\n")
+    stream.register_processor(NumericProcessor())
+    stream.register_processor(TextProcessor())
+    stream.register_processor(LogProcessor())
 
-    batch: list[Any] = [
+    batch1: list[Any] = [
         'Hello world',
         [3.14, -1, 2.71],
         [
@@ -171,27 +198,32 @@ def main() -> None:
         42,
         ['Hi', 'five'],
     ]
-    print(f"\nSend first batch of data on stream: {batch}")
-    stream.process_stream(batch)
+    print(f"Send first batch of data on stream: {batch1}\n")
+    stream.process_stream(batch1)
     stream.print_processors_stats()
 
-    print("\nRegistering other data processors")
-    text = TextProcessor()
-    log = LogProcessor()
-    stream.register_processor(text)
-    stream.register_processor(log)
-    print("Send the same batch again")
-    stream.process_stream(batch)
+    print("\nSend 3 processed data from each processor to a CSV plugin:")
+    stream.output_pipeline(3, CSVExportPlugin())
+    print()
     stream.print_processors_stats()
 
-    print("\nConsume some elements from the data processors: "
-          "Numeric 3, Text 2, Log 1")
-    for proc, count in ((num, 3), (text, 2), (log, 1)):
-        for _ in range(count):
-            try:
-                proc.output()
-            except IndexError as e:
-                print(f"Output error - {proc.name}: {e}")
+    batch2: list[Any] = [
+        21,
+        ['I love AI', 'LLMs are wonderful', 'Stay healthy'],
+        [
+            {'log_level': 'ERROR', 'log_message': '500 server crash'},
+            {'log_level': 'NOTICE',
+             'log_message': 'Certificate expires in 10 days'},
+        ],
+        [32, 42, 64, 84, 128, 168],
+        'World hello',
+    ]
+    print(f"\nSend another batch of data: {batch2}\n")
+    stream.process_stream(batch2)
+    stream.print_processors_stats()
+    print("\nSend 5 processed data from each processor to a JSON plugin:")
+    stream.output_pipeline(5, JSONExportPlugin())
+    print()
     stream.print_processors_stats()
 
 
