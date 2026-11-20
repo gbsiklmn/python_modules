@@ -4,15 +4,16 @@ from .creature import Creature
 from .flame import Flameling, Pyrodon
 from .transform import Morphagon, Shiftling
 
+
 class CreatureFactory(ABC):
     @abstractmethod
     def create_base(self) -> Creature:
         ...
 
-
     @abstractmethod
     def create_evolved(self) -> Creature:
         ...
+
 
 class FlameFactory(CreatureFactory):
     def create_base(self) -> Creature:

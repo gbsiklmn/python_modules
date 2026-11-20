@@ -1,6 +1,7 @@
 from .capability import TransformCapability
 from .creature import Creature
 
+
 class Shiftling(Creature, TransformCapability):
     def __init__(self) -> None:
         Creature.__init__(self, "Shiftling", "Normal")
