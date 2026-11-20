@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 
 from ex3 import Creature, TransformCapability
 
+
 class InvalidStrategyError(Exception):
     pass
 
@@ -16,6 +17,7 @@ class BattleStrategy(ABC):
     @abstractmethod
     def act(self, creature: Creature) -> None:
         ...
+
 
 class NormalStrategy(BattleStrategy):
     name = "Normal"

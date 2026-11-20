@@ -7,7 +7,8 @@ from ex4 import (
 )
 
 
-def print_lineup(opponents: list[tuple[CreatureFactory, BattleStrategy]]) -> None:
+def print_lineup(opponents: list[tuple[CreatureFactory,
+                                       BattleStrategy]]) -> None:
     labels: list[str] = []
     for factory, strategy in opponents:
         labels.append(f"({factory.create_base().name}+{strategy.name})")

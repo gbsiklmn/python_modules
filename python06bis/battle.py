@@ -1,5 +1,6 @@
 from ex3 import CreatureFactory, FlameFactory, TransformCreatureFactory
 
+
 def test_factory(factory: CreatureFactory) -> None:
     print("Testing factory")
     base = factory.create_base()
@@ -8,6 +9,7 @@ def test_factory(factory: CreatureFactory) -> None:
     evolved = factory.create_evolved()
     print(evolved.describe())
     print(evolved.attack())
+
 
 def test_battle(first: CreatureFactory, second: CreatureFactory) -> None:
     print("Testing battle")
@@ -29,6 +31,7 @@ def main() -> None:
     test_factory(transform)
     print()
     test_battle(flame, transform)
+
 
 if __name__ == "__main__":
     main()
