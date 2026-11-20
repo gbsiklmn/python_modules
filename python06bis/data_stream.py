@@ -130,7 +130,7 @@ class DataStream:
                         handled = True
                     break
             if not handled:
-                print("DataStream error -"
+                print("DataStream error - "
                       f"Can't process element in stream: {element}")
 
     def print_processors_stats(self) -> None:
