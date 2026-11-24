@@ -2,6 +2,7 @@ from datetime import datetime
 from enum import Enum
 from pydantic import BaseModel, Field, ValidationError, model_validator
 
+
 class Rank(Enum):
     CADET = "cadet"
     OFFICER = "officer"
@@ -58,6 +59,7 @@ class SpaceMission(BaseModel):
                 raise ValueError("All crew members must be active")
         return self
 
+
 def main() -> None:
     print("Space Mission Crew Validation")
     print("=" * 41)
@@ -66,19 +68,19 @@ def main() -> None:
         mission_id="M2024_MARS",
         mission_name="Mars Colony Establishment",
         destination="Mars",
-        launch_date="2024-06-01T09:00:00",
+        launch_date=datetime(2024, 6, 1, 9, 0),
         duration_days=900,
         budget_millions=2500.0,
         crew=[
             CrewMember(member_id="CM001", name="Sarah Connor",
-                       rank="commander", age=45,
+                       rank=Rank.COMMANDER, age=45,
                        specialization="Mission Command",
                        years_experience=20),
             CrewMember(member_id="CM002", name="John Smith",
-                       rank="lieutenant", age=35,
-                       specialization="Navigation, years_experience=8"),
-            CrewMember(member_id="CM003", mame="Alice Johnson",
-                       rank="officer", age=29,
+                       rank=Rank.LIEUTENANT, age=35,
+                       specialization="Navigation", years_experience=8),
+            CrewMember(member_id="CM003", name="Alice Johnson",
+                       rank=Rank.OFFICER, age=29,
                        specialization="Engineering", years_experience=3),
         ],
     )
@@ -92,7 +94,7 @@ def main() -> None:
     print(f"Crew size: {len(mission.crew)}")
     print("Crew members:")
     for member in mission.crew:
-        print(f"- {member.name} ({member.rank.value}) -"
+        print(f"- {member.name} ({member.rank.value}) - "
               f"{member.specialization}")
 
     print()
@@ -103,21 +105,22 @@ def main() -> None:
             mission_id="M2024_MOON",
             mission_name="Lunar Survey",
             destination="Moon",
-            launch_date="2025-03-10T09:00:00",
+            launch_date=datetime(2024, 6, 1, 9, 0),
             duration_days=30,
             budget_millions=500.0,
             crew=[
                 CrewMember(member_id="CM004", name="Bob Lee",
-                           rank="officer", age=30,
+                           rank=Rank.OFFICER, age=30,
                            specialization="Geology", years_experience=6),
                 CrewMember(member_id="CM005", name="Eva Green",
-                           rank="cadet", age=22,
+                           rank=Rank.CADET, age=22,
                            specialization="Medicine", years_experience=1),
             ],
         )
     except ValidationError as e:
         print("Expected validation error:")
         print(e.errors()[0]["ctx"]["error"])
+
 
 if __name__ == "__main__":
     main()

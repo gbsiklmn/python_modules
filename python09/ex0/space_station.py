@@ -15,7 +15,7 @@ class SpaceStation(BaseModel):
     notes: Optional[str] = Field(default=None, max_length=200)
 
 
-def main():
+def main() -> None:
     print("Space Station Data Validation")
     print("=" * 40)
 
@@ -25,7 +25,7 @@ def main():
         crew_size=6,
         power_level=85.5,
         oxygen_level=92.3,
-        last_maintenance="2024-01-15T10:30:00"
+        last_maintenance=datetime(2024, 1, 15, 10, 30),
     )
 
     print("Valid station created:")
@@ -47,7 +47,7 @@ def main():
             crew_size=25,
             power_level=50.0,
             oxygen_level=50.0,
-            last_maintenance="2024-01-15T10:30:00",
+            last_maintenance=datetime(2024, 1, 15, 10, 30),
         )
     except ValidationError as e:
         print("Expected validation error:")
